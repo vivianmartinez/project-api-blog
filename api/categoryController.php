@@ -1,10 +1,10 @@
 <?php
 
 
-class CategorieController{
+class CategoryController{
 
     public function categories()
     {
-        
+        echo 'all categories';
     }
 }
