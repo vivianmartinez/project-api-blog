@@ -2,3 +2,5 @@ Options All -Indexes
 ErrorDocument 404 /dev-api-course/services/error/errorResponse404.php
 ErrorDocument 403 /dev-api-course/services/error/errorResponse403.php
 
+RewriteEngine On
+RewriteRule ^([a-zA-Z0-9\-]+)/?([a-zA-Z0-9\-]*)$ index.php?controller=$1&method=$2

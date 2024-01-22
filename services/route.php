@@ -1,7 +1,8 @@
 <?php
 
-require_once 'api/categorieController.php';
+require_once 'api/categoryController.php';
 
 $route =  $_SERVER['REQUEST_URI'];
 print_r($route);
-print_r($_GET['view']);
+echo '<hr>';
+print_r($_GET);
