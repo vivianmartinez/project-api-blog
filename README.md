@@ -1,2 +1,3 @@
-# project-api-blog
-Project PHP API Blog without framework
+# PHP API WITH NO FAMEWORK - USING MYSQLI CLASS - POO - MVC
+
+Project PHP API without framework.

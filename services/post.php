@@ -1,3 +1,5 @@
 <?php
 
-print_r($_GET);
+$response = new $classController();
+
+$response->create();

@@ -76,4 +76,16 @@ class Category{
         $result = $stmt->get_result();
         return $result->fetch_assoc() ?? false;
     }
+
+    public function save(){
+        $name  = $this->getNombre();
+        $sql  = 'INSERT INTO '.$this->table.'(nombre) VALUES(?)';
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("s",$name);
+        $stmt->execute();
+        if($stmt){
+          return  $this->setId($this->mysqli->insert_id);
+        }
+        return false;
+    }
 }

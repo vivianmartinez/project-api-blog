@@ -21,7 +21,7 @@ if($keyController){
 }
 
 $classController = ucfirst($controller).'Controller';
-$id = isset($_GET['id']) ? $_GET['id'] : false;
+$id = $_GET['id'] ?? false;
 
 $messageError = [
     'error' => true,
@@ -34,9 +34,13 @@ if(!$controller || !class_exists($classController)){
 }
 
 //if((class_exists($classController) && $id) || (in_array($controller,$entities) && !$id)){
-if((class_exists($classController) && $id && !$keyController) || ($keyController && !$id)){
+//if((class_exists($classController) && $id && !$keyController) || ($keyController && !$id)){
+if(class_exists($classController)){
     switch ($_SERVER['REQUEST_METHOD']){
         case 'GET':
+            if(!$keyController && !$id){
+                return JsonResponse::view($messageError,400);
+            }
             require_once 'services/get.php';
             break;
         case 'POST':
