@@ -1,3 +1,3 @@
 <?php
 
-require_once 'services/route.php';
+require_once 'routes/route.php';

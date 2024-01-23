@@ -1,10 +1,11 @@
 
 <?php
-
+require_once '../../services/json-response/json-response.php';
 
 $messageError = [
+    'error' => true,
     'status' => 404,
     'message' => 'Not found'
 ];
 
-echo json_encode($messageError,http_response_code(404));
+return JsonResponse::view($messageError,404);
