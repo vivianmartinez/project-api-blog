@@ -101,9 +101,9 @@ class Category{
     }
 
     public function update(){
-        $id  = $this->getId();
+        $id   = $this->getId();
         $name = $this->getName();
-        $sql = 'UPDATE '.$this->table.' SET nombre = ? WHERE id = ?';
+        $sql  = 'UPDATE '.$this->table.' SET nombre = ? WHERE id = ?';
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param('si',$name,$id);
         if($stmt->execute()){
