@@ -61,4 +61,22 @@ class CategoryController{
         }
         return JsonResponse::view($this->error500,500);
     }
+
+     /**
+     * DELETE category
+     * */
+
+    public function delete($id){
+        $this->category->setId($id);
+        $category = $this->category->findOne();
+        if(!$category){
+            return JsonResponse::view($this->error404,404);
+        }
+        $delete = $this->category->delete();
+        if($delete){
+            $message = ['error' => false, 'status' => 200, 'message'=>'category deleted'];
+            return JsonResponse::view($message,200);
+        }
+        return JsonResponse::view($this->error500,500);
+    }
 }

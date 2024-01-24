@@ -33,8 +33,6 @@ if(!$controller || !class_exists($classController)){
     return JsonResponse::view($messageError,400);
 }
 
-//if((class_exists($classController) && $id) || (in_array($controller,$entities) && !$id)){
-//if((class_exists($classController) && $id && !$keyController) || ($keyController && !$id)){
 if(class_exists($classController)){
     switch ($_SERVER['REQUEST_METHOD']){
         case 'GET':
@@ -47,7 +45,10 @@ if(class_exists($classController)){
             require_once 'services/post.php';
             break;
         case 'DELETE':
-            echo 'DELETE';
+            if(!$id){
+                return JsonResponse::view($messageError,400);
+            }
+            require_once 'services/delete.php';
             break;
         case 'PUT':
             echo 'PUT';

@@ -78,13 +78,24 @@ class Category{
     }
 
     public function save(){
-        $name  = $this->getNombre();
+        $name = $this->getNombre();
         $sql  = 'INSERT INTO '.$this->table.'(nombre) VALUES(?)';
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("s",$name);
         $stmt->execute();
         if($stmt){
           return  $this->setId($this->mysqli->insert_id);
+        }
+        return false;
+    }
+
+    public function delete(){
+        $id   = $this->getId();
+        $sql  = 'DELETE FROM '.$this->table.' WHERE id = ?';
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("i",$id);
+        if($stmt->execute()){
+            return true;
         }
         return false;
     }

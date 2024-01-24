@@ -1,4 +1,4 @@
 <?php
 
 $response = new $classController();
-$response->create();
+$response->delete($id);
