@@ -1,7 +1,7 @@
 <?php
 
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods:','GET,POST,PUT,DELETE');
+header('Access-Control-Allow-Methods:','GET,POST,PATCH,DELETE');
 header('Content-Type: application/json');
 
 require_once 'services/json-response/json-response.php';
@@ -42,16 +42,22 @@ if(class_exists($classController)){
             require_once 'services/get.php';
             break;
         case 'POST':
+            if($keyController){
+                return JsonResponse::view($messageError,400);
+            }
             require_once 'services/post.php';
             break;
         case 'DELETE':
-            if(!$id){
+            if(!$id || $keyController){
                 return JsonResponse::view($messageError,400);
             }
             require_once 'services/delete.php';
             break;
-        case 'PUT':
-            echo 'PUT';
+        case 'PATCH':
+            if(!$id || $keyController){
+                return JsonResponse::view($messageError,400);
+            }
+            require_once 'services/patch.php';
             break;
         default:
             return JsonResponse::view($messageError,400);

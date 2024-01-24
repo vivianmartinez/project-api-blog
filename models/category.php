@@ -4,7 +4,7 @@
 class Category{
 
     private $id;
-    private $nombre;
+    private $name;
     private $table;
     private $mysqli;
 
@@ -34,19 +34,19 @@ class Category{
     }
 
     /**
-     * Get the value of nombre
+     * Get the value of name
      */
-    public function getNombre()
+    public function getName()
     {
-        return $this->nombre;
+        return $this->name;
     }
 
     /**
-     * Set the value of nombre
+     * Set the value of name
      */
-    public function setNombre($nombre): self
+    public function setName($name): self
     {
-        $this->nombre = $nombre;
+        $this->name = $name;
 
         return $this;
     }
@@ -78,7 +78,7 @@ class Category{
     }
 
     public function save(){
-        $name = $this->getNombre();
+        $name = $this->getName();
         $sql  = 'INSERT INTO '.$this->table.'(nombre) VALUES(?)';
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("s",$name);
@@ -94,6 +94,18 @@ class Category{
         $sql  = 'DELETE FROM '.$this->table.' WHERE id = ?';
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("i",$id);
+        if($stmt->execute()){
+            return true;
+        }
+        return false;
+    }
+
+    public function update(){
+        $id  = $this->getId();
+        $name = $this->getName();
+        $sql = 'UPDATE '.$this->table.' SET nombre = ? WHERE id = ?';
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param('si',$name,$id);
         if($stmt->execute()){
             return true;
         }

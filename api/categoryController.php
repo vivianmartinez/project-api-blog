@@ -53,7 +53,7 @@ class CategoryController{
             return JsonResponse::view($this->error400,400);
         }
 
-        $this->category->setNombre($data['nombre']);
+        $this->category->setName($data['nombre']);
         $category = $this->category->save();
         if($category){
             $new = $this->category->findOne();
@@ -78,5 +78,25 @@ class CategoryController{
             return JsonResponse::view($message,200);
         }
         return JsonResponse::view($this->error500,500);
+    }
+     /**
+     * UPDATE category
+     * */
+    public function update($id){
+        $this->category->setId($id);
+        $category = $this->category->findOne();
+        $request = file_get_contents('php://input');
+        $data = json_decode($request,true);
+        //validate if exists category and validate json
+        if(!$category || $data == null || count($data) > 1 || !array_key_exists('nombre',$data)){
+            return JsonResponse::view($this->error404,404);
+        }
+        $this->category->setName($data['nombre']);
+        $update = $this->category->update($id);
+        if(!$update){
+            return JsonResponse::view($this->error500,500);
+        }
+        
+        return JsonResponse::view($this->category->findOne(),200);
     }
 }
