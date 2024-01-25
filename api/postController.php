@@ -20,5 +20,21 @@ class PostController{
         if($posts){
             return JsonResponse::view($posts,200);
         }
+        return JsonResponse::errorView(404);
     }
+
+    /**
+     * GET single post
+     * */
+
+     public function one($id){
+        $this->post->setId($id);
+        $post = $this->post->findOne();
+
+        if($post){
+            return JsonResponse::view($post,200);
+        }
+        return JsonResponse::errorView(404);
+    }
+
 }

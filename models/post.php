@@ -9,10 +9,12 @@ class Post{
     private $userId;
     private $categoryId;
     private $mysqli;
+    private $table;
 
     public function __construct()
     {
         $this->mysqli = Connection::connect();
+        $this->table = 'entradas';
     }
 
     /**
@@ -124,6 +126,28 @@ class Post{
     }
 
     public function findAll(){
+        $sql = 'SELECT * FROM '.$this->table;
+        $stmt = $this->mysqli->query($sql);
+        if($stmt){
+            $result = [];
+            while($row = $stmt->fetch_assoc()){
+                array_push($result,$row);
+            }
+            $this->mysqli->close();
+            return $result;
+        }
+        $this->mysqli->close();
+        return false;
+    }
 
+    public function findOne(){
+        $id = $this->getId();
+        $sql = 'SELECT * FROM '.$this->table.' WHERE id = ?';
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("i",$id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $this->mysqli->close();
+        return $result->fetch_assoc() ?? false;
     }
 }

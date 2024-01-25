@@ -74,6 +74,7 @@ class Category{
         $stmt->bind_param("i",$id);
         $stmt->execute();
         $result = $stmt->get_result();
+        $this->mysqli->close();
         return $result->fetch_assoc() ?? false;
     }
 
