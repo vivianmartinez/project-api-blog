@@ -133,10 +133,8 @@ class Post{
             while($row = $stmt->fetch_assoc()){
                 array_push($result,$row);
             }
-            $this->mysqli->close();
             return $result;
         }
-        $this->mysqli->close();
         return false;
     }
 
@@ -147,7 +145,32 @@ class Post{
         $stmt->bind_param("i",$id);
         $stmt->execute();
         $result = $stmt->get_result();
-        $this->mysqli->close();
         return $result->fetch_assoc() ?? false;
+    }
+
+    public function save(){
+        $title = $this->getTitle();
+        $description = $this->getDescription();
+        $categoryId = $this->getcategoryId();
+        $userId = $this->getuserId();
+        $sql  = 'INSERT INTO '.$this->table.' (titulo,descripcion,categoria_id,usuario_id,fecha) VALUES(?,?,?,?,CURRENT_DATE())'  ;
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("ssii",$title,$description,$categoryId,$userId);
+        if($stmt->execute()){
+            $this->setId($this->mysqli->insert_id);
+            return true;
+        }
+        return false;
+    }
+
+    public function delete(){
+        $id   = $this->getId();
+        $sql  = 'DELETE FROM '.$this->table.' WHERE id = ?';
+        $stmt = $this->mysqli->prepare($sql);
+        $stmt->bind_param("i",$id);
+        if($stmt->execute()){
+            return true;
+        }
+        return false;
     }
 }

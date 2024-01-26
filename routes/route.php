@@ -42,7 +42,7 @@ if(class_exists($classController)){
             require_once 'services/get.php';
             break;
         case 'POST':
-            if($keyController){
+            if($keyController || $id){
                 return JsonResponse::view($messageError,400);
             }
             require_once 'services/post.php';

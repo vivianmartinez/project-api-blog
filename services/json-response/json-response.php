@@ -31,4 +31,18 @@ class JsonResponse{
                 $self->view($self->error500,$status);
         }
     }
+
+    static public function errorViewMsg($status,$message){
+        $self = new self();
+        switch($status){
+            case 400:
+                $self->view(['error' => true, 'status' => $status, 'message' => $message],$status);
+                break;
+            case 404:
+                $self->view(['error' => true, 'status' => $status, 'message' => $message],$status);
+                break;
+            default:
+                $self->view(['error' => true, 'status' => $status, 'message' => $message],$status);
+        }
+    }
 }

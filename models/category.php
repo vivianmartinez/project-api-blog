@@ -1,6 +1,5 @@
 <?php
 
-
 class Category{
 
     private $id;
@@ -60,10 +59,8 @@ class Category{
             while($row = $stmt->fetch_assoc()){
                 array_push($result,$row);
             }
-            $this->mysqli->close();
             return $result;
         }
-        $this->mysqli->close();
         return false;
     }
 
@@ -74,7 +71,6 @@ class Category{
         $stmt->bind_param("i",$id);
         $stmt->execute();
         $result = $stmt->get_result();
-        $this->mysqli->close();
         return $result->fetch_assoc() ?? false;
     }
 
