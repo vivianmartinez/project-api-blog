@@ -93,4 +93,45 @@ class PostController{
         return JsonResponse::errorView(500);
     }   
 
+    /**
+     * UPDATE post 
+     */
+    public function update($id){
+        $this->post->setId($id);
+        $post = $this->post->findOne();
+        if($post){
+            $request = file_get_contents("php://input");
+            $data = json_decode($request,true);
+            if($data){
+                if($data['title'] && is_string($data['title'])){
+                    $this->post->setTitle($data['title']);
+                }
+                if($data['description'] && is_string($data['description'])){
+                    $this->post->setDescription($data['description']);
+                }
+                if($data['category_id']){
+                    $this->category->setId($data['category_id']);
+                    $post_category = $this->category->findOne();
+                    if(!$post_category){
+                        return JsonResponse::errorViewMsg(404,'Category not found');
+                    }
+                    $this->post->setCategoryId($post_category['id']);
+                }
+                //verify this step
+                if($data['user_id']){
+                    $this->user->setId($data['user_id']);
+                    $post_user = $this->user->findOne();
+                    if(!$post_user){
+                        return JsonResponse::errorViewMsg(404,'User not found');
+                    }
+                    $this->post->setUserId($post_user['id']);
+                }
+                //update post
+            }else{
+                return JsonResponse::errorView(400);
+            }
+        }else{
+            return JsonResponse::errorView(404);
+        }
+    }
 }

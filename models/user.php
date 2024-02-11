@@ -48,7 +48,6 @@ class User{
     public function setName($name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -66,7 +65,6 @@ class User{
     public function setLastname($lastname): self
     {
         $this->lastname = $lastname;
-
         return $this;
     }
 
@@ -84,7 +82,6 @@ class User{
     public function setEmail($email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -102,7 +99,6 @@ class User{
     public function setPassword($password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -120,7 +116,6 @@ class User{
     public function setCreatedAt($createdAt): self
     {
         $this->createdAt = $createdAt;
-
         return $this;
     }
 

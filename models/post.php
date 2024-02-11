@@ -124,7 +124,9 @@ class Post{
 
         return $this;
     }
-
+    /**
+     * Get all posts
+     */
     public function findAll(){
         $sql = 'SELECT * FROM '.$this->table;
         $stmt = $this->mysqli->query($sql);
@@ -138,6 +140,10 @@ class Post{
         return false;
     }
 
+    /**
+     * Get find one
+     */
+
     public function findOne(){
         $id = $this->getId();
         $sql = 'SELECT * FROM '.$this->table.' WHERE id = ?';
@@ -147,13 +153,16 @@ class Post{
         $result = $stmt->get_result();
         return $result->fetch_assoc() ?? false;
     }
+    /**
+     * Save post
+     */
 
     public function save(){
         $title = $this->getTitle();
         $description = $this->getDescription();
         $categoryId = $this->getcategoryId();
         $userId = $this->getuserId();
-        $sql  = 'INSERT INTO '.$this->table.' (titulo,descripcion,categoria_id,usuario_id,fecha) VALUES(?,?,?,?,CURRENT_DATE())'  ;
+        $sql  = 'INSERT INTO '.$this->table.' (titulo,descripcion,categoria_id,usuario_id,fecha) VALUES(?,?,?,?,CURRENT_DATE())';
         $stmt = $this->mysqli->prepare($sql);
         $stmt->bind_param("ssii",$title,$description,$categoryId,$userId);
         if($stmt->execute()){
@@ -162,6 +171,9 @@ class Post{
         }
         return false;
     }
+    /**
+     * Delete post
+     */
 
     public function delete(){
         $id   = $this->getId();
@@ -173,4 +185,22 @@ class Post{
         }
         return false;
     }
+    /**
+     * Update Post
+     */
+    public function update(){
+        $id   = $this->getId();
+        $update = "";
+        $title = $this->getTitle() ?? null;
+        $description = $this->getDescription() ?? null;
+
+        if($title !== null){
+            $update += "title = $title ";
+        }
+        $sql = "UPDATE $this->table SET ".$update." WHERE id = ?";
+    }
+
+    /*
+    https://nhmadrid-my.sharepoint.com/:f:/g/personal/soporte_dignitae_com/EnsFdX8OwtdPkMem8bwuRi0ByEBNsez0ikNCoCPSJtMbkg?e=zmfarD
+    */
 }
